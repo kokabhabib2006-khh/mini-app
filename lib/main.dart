@@ -1,121 +1,208 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const CourseApp());
+  runApp(const TripApp());
 }
 
-class CourseApp extends StatelessWidget {
-  const CourseApp({super.key});
+class TripApp extends StatelessWidget {
+  const TripApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Course Details',
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        scaffoldBackgroundColor: const Color(0xFFF3F4FA),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF3949AB),
-          foregroundColor: Colors.white,
-          centerTitle: true,
-        ),
+        primarySwatch: Colors.pink,
+        scaffoldBackgroundColor: const Color(0xFFFFF0F5),
       ),
-      home: const CourseDetailsScreen(),
+      home: const TripScreen(),
     );
   }
 }
 
-class CourseDetailsScreen extends StatelessWidget {
-  const CourseDetailsScreen({super.key});
+class TripScreen extends StatefulWidget {
+  const TripScreen({super.key});
 
-  final List<String> topics = const [
-    'Introduction to Programming',
-    'Programming Fundamentals',
-    'Variables and Data Types',
-    'Conditional Statements',
-    'Loops and Iterations',
-    'Functions and Methods',
-    'Arrays and Lists',
-    'Object-Oriented Programming',
-    'Classes and Objects',
-    'Final Project and Revision',
-  ];
+  @override
+  State<TripScreen> createState() => _TripScreenState();
+}
+
+class _TripScreenState extends State<TripScreen> {
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Course — 264',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          bottom: const TabBar(
-            isScrollable: false,
-            indicatorColor: Colors.amber,
-            indicatorWeight: 4,
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white70,
-            tabs: [
-              Tab(
-                icon: Icon(Icons.info_outline),
-                text: 'Overview',
-              ),
-              Tab(
-                icon: Icon(Icons.menu_book),
-                text: 'Syllabus',
-              ),
-              Tab(
-                icon: Icon(Icons.star_outline),
-                text: 'Reviews',
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'My Travel Card',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
+        backgroundColor: const Color(0xFFD81B60),
+        foregroundColor: Colors.white,
+      ),
 
-        body: TabBarView(
-          children: [
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
 
-            // TAB 1: OVERVIEW
-            ListView(
-              padding: const EdgeInsets.all(16),
+            child: Column(
               children: [
+                const Text(
+                  'Explore Your Next Trip',
+                  style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFAD1457),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
                 Container(
-                  padding: const EdgeInsets.all(20),
+                  height: 240,
+                  width: double.infinity,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFF3949AB),
-                        Color(0xFF7986CB),
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.pink.withOpacity(0.25),
+                        blurRadius: 12,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 240,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xFFF48FB1),
+                                Color(0xFFCE93D8),
+                                Color(0xFF9575CD),
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ),
+                        ),
+                        const Center(
+                          child: Icon(
+                            Icons.flight_takeoff,
+                            size: 100,
+                            color: Colors.white,
+                          ),
+                        ),
+
+                        Positioned(
+                          top: 15,
+                          right: 15,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFFD54F),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: const Text(
+                              'NEW 264',
+                              style: TextStyle(
+                                color: Color(0xFF880E4F),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 8,
+                          left: 8,
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isFavorite = !isFavorite;
+                              });
+                            },
+                            icon: Icon(
+                              isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.white,
+                              size: 32,
+                            ),
+                          ),
+                        ),
+
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(16),
+                            color: Colors.black.withOpacity(0.45),
+                            child: const Text(
+                              'Trip #264',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                    borderRadius: BorderRadius.circular(18),
                   ),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+
+                const SizedBox(height: 25),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.pink.withOpacity(0.12),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.school,
-                        color: Colors.white,
-                        size: 45,
+                        isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.pink,
                       ),
-                      SizedBox(height: 12),
+
+                      const SizedBox(width: 10),
+
                       Text(
-                        'Mobile Application Development',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 21,
+                        isFavorite
+                            ? 'Added to favourites'
+                            : 'Not added to favourites',
+                        style: const TextStyle(
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'Learn to build modern mobile applications using Flutter and Dart.',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
+                          color: Color(0xFFAD1457),
                         ),
                       ),
                     ],
@@ -123,212 +210,17 @@ class CourseDetailsScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 20),
-
                 const Text(
-                  'Course Information',
+                  'Make beautiful memories! ♡',
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF303F9F),
-                  ),
-                ),
-
-                const SizedBox(height: 10),
-
-                Card(
-                  elevation: 3,
-                  child: Column(
-                    children: const [
-                      ListTile(
-                        leading: Icon(
-                          Icons.book,
-                          color: Colors.indigo,
-                        ),
-                        title: Text('Course Name'),
-                        subtitle: Text(
-                          'Mobile Application Development',
-                        ),
-                      ),
-                      Divider(),
-                      ListTile(
-                        leading: Icon(
-                          Icons.access_time,
-                          color: Colors.indigo,
-                        ),
-                        title: Text('Credit Hours'),
-                        subtitle: Text('3 Credit Hours'),
-                      ),
-                      Divider(),
-                      ListTile(
-                        leading: Icon(
-                          Icons.person,
-                          color: Colors.indigo,
-                        ),
-                        title: Text('Instructor'),
-                        subtitle: Text('Ms. Ayesha Khan'),
-                      ),
-                    ],
+                    fontSize: 16,
+                    color: Color(0xFF9575CD),
+                    fontStyle: FontStyle.italic,
                   ),
                 ),
               ],
             ),
-
-            // TAB 2: SYLLABUS
-            ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                const Text(
-                  'Course Syllabus',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF303F9F),
-                  ),
-                ),
-
-                const SizedBox(height: 8),
-
-                const Text(
-                  'Weekly topics covered in this course.',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                ...List.generate(
-                  topics.length,
-                      (index) => Card(
-                    elevation: 2,
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 6,
-                    ),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.indigo,
-                        child: Text(
-                          '${index + 1}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      title: Text(
-                        'Week ${index + 1}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.indigo,
-                        ),
-                      ),
-                      subtitle: Text(topics[index]),
-                      trailing: const Icon(
-                        Icons.check_circle_outline,
-                        color: Colors.green,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            // TAB 3: REVIEWS
-            ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                const Text(
-                  'Student Reviews',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF303F9F),
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                Card(
-                  elevation: 3,
-                  child: const ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.indigo,
-                      child: Text(
-                        'A',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    title: Text(
-                      'Ali Ahmed',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Very helpful course. I learned Flutter easily.',
-                    ),
-                    trailing: Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                  ),
-                ),
-
-                Card(
-                  elevation: 3,
-                  child: const ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.purple,
-                      child: Text(
-                        'S',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    title: Text(
-                      'Sara Khan',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'The lectures are interesting and easy to understand.',
-                    ),
-                    trailing: Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                  ),
-                ),
-
-                Card(
-                  elevation: 3,
-                  child: const ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.teal,
-                      child: Text(
-                        'U',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    title: Text(
-                      'Usman Ali',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Excellent course with practical examples.',
-                    ),
-                    trailing: Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+          ),
         ),
       ),
     );
